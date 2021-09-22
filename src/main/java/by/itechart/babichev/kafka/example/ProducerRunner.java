@@ -3,13 +3,14 @@ package by.itechart.babichev.kafka.example;
 import by.itechart.babichev.kafka.example.producer.impl.BaseProducer;
 import by.itechart.babichev.kafka.example.producer.Producer;
 import by.itechart.babichev.kafka.example.producer.impl.BaseProducerWithCallback;
+import by.itechart.babichev.kafka.example.producer.impl.BaseProducerWithKeys;
 import by.itechart.babichev.kafka.example.util.ConsoleReader;
 
 import java.io.IOException;
 
 public class ProducerRunner {
 
-    private static final Producer producer = new BaseProducerWithCallback();
+    private static final Producer producer = new BaseProducerWithKeys();
 
     protected static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
@@ -23,7 +24,7 @@ public class ProducerRunner {
             if(data.equals("exit")) {
                 break;
             }
-            
+
             producer.sendMessage(data);
         }
 
