@@ -1,4 +1,4 @@
-package by.itechart.babichev.kafka.example;
+package by.itechart.babichev.kafka.example.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
