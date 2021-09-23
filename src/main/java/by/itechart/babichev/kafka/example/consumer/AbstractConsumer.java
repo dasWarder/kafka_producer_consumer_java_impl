@@ -13,7 +13,7 @@ import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS
 
 public abstract class AbstractConsumer implements Consumer {
 
-    protected static final String GROUP_ID = "test";
+    protected static final String GROUP_ID = "test_1";
 
     protected static final String AUTO_OFFSET = "earliest";
 

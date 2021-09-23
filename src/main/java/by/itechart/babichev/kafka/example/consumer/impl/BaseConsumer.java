@@ -32,6 +32,7 @@ public class BaseConsumer extends AbstractConsumer {
 
             logger.info("Consumer: {}. Key = {}, value = {}, partition = {}, offset = {}",
                     CONSUMER.toString(), record.key(), record.value(), record.partition(), record.offset());
+            System.out.println(record.value());
         }
     }
 }
