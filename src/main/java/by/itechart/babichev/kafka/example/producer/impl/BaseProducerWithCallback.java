@@ -1,22 +1,27 @@
 package by.itechart.babichev.kafka.example.producer.impl;
 
 import by.itechart.babichev.kafka.example.producer.AbstractProducer;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BaseProducerWithCallback extends AbstractProducer {
 
-    private final Logger logger = LoggerFactory.getLogger(BaseProducerWithCallback.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseProducerWithCallback.class);
 
-    private final KafkaProducer<String, String> producer = super.getProducer();
+    public BaseProducerWithCallback() {
+        super();
+    }
+
+    public BaseProducerWithCallback(String topic) {
+        super(topic);
+    }
 
     @Override
     public void sendMessage(String message) {
 
         ProducerRecord<String, String> record = new ProducerRecord<>(BASE_TOPIC, message);
-        producer.send(record, (rm, e) -> {
+        PRODUCER.send(record, (rm, e) -> {
 
             if (e != null) {
                 logger.error("The error = {} with occurred", e.getMessage());
@@ -25,10 +30,5 @@ public class BaseProducerWithCallback extends AbstractProducer {
                         rm.topic(), rm.partition(), rm.offset(), rm.timestamp());
             }
         });
-    }
-
-    @Override
-    public void closeProducer() {
-        producer.close();
     }
 }

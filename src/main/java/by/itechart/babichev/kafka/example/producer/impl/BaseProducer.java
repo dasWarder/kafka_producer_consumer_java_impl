@@ -1,22 +1,28 @@
 package by.itechart.babichev.kafka.example.producer.impl;
 
 import by.itechart.babichev.kafka.example.producer.AbstractProducer;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseProducer extends AbstractProducer {
 
-    private final KafkaProducer<String, String> producer = super.getProducer();
+    private static final Logger logger = LoggerFactory.getLogger(BaseProducer.class);
+
+    public BaseProducer() {
+        super();
+    }
+
+    public BaseProducer(String topic) {
+        super(topic);
+    }
 
     @Override
     public void sendMessage(String message) {
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(BASE_TOPIC, message);
-        producer.send(record);
-    }
+        logger.info("Send a producer message");
 
-    @Override
-    public void closeProducer() {
-        producer.close();
+        ProducerRecord<String, String> record = new ProducerRecord<>(BASE_TOPIC, message);
+        PRODUCER.send(record);
     }
 }

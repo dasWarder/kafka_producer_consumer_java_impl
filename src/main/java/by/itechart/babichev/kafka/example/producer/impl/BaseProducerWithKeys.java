@@ -1,10 +1,7 @@
 package by.itechart.babichev.kafka.example.producer.impl;
 
 import by.itechart.babichev.kafka.example.producer.AbstractProducer;
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +11,15 @@ public class BaseProducerWithKeys extends AbstractProducer {
 
     private static final AtomicLong ID = new AtomicLong(1);
 
-    private final KafkaProducer<String, String> producer = super.getProducer();
+    private static final Logger logger = LoggerFactory.getLogger(BaseProducerWithKeys.class);
 
-    private final Logger logger = LoggerFactory.getLogger(BaseProducerWithKeys.class);
+    public BaseProducerWithKeys() {
+        super();
+    }
+
+    public BaseProducerWithKeys(String topic) {
+        super(topic);
+    }
 
     @Override
     public void sendMessage(String message) {
@@ -26,7 +29,7 @@ public class BaseProducerWithKeys extends AbstractProducer {
         logger.info("Key = {}", id);
 
         ProducerRecord<String, String> record = new ProducerRecord<>(BASE_TOPIC, id, message);
-        producer.send(record, (rm, e) -> {
+        PRODUCER.send(record, (rm, e) -> {
 
             if (e == null) {
                 logger.info("Record metadata received. Topic = {}, partition = {}, offset = {}, timestamp = {}",
@@ -35,10 +38,5 @@ public class BaseProducerWithKeys extends AbstractProducer {
                 logger.error("The exception = {} with a message = {} occurred", e.getClass().getSimpleName(), e.getMessage());
             }
         });
-    }
-
-    @Override
-    public void closeProducer() {
-        producer.close();
     }
 }

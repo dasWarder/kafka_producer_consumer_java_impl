@@ -1,6 +1,5 @@
 package by.itechart.babichev.kafka.example.producer;
 
-import by.itechart.babichev.kafka.example.util.ConsoleReader;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
@@ -12,26 +11,35 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 
 public abstract class AbstractProducer implements Producer {
 
-    protected static final String BASE_TOPIC = "firstTopic";
+    protected static String BASE_TOPIC = "firstTopic";
 
     protected static final String BOOTSTRAP_SERVERS = "127.0.0.1:9092";
 
-    @Override
-    public abstract void sendMessage(String message);
+    protected static final String STRING_SERIALIZER = StringSerializer.class.getName();
 
-    protected KafkaProducer getProducer() {
+    protected static KafkaProducer<String, String> PRODUCER;
+
+    public AbstractProducer() {
 
         Properties properties = new Properties();
 
         properties.setProperty(BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
-        properties.setProperty(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.setProperty(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.setProperty(KEY_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
+        properties.setProperty(VALUE_SERIALIZER_CLASS_CONFIG, STRING_SERIALIZER);
 
-        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
+        PRODUCER = new KafkaProducer<>(properties);
+    }
 
-        return producer;
+    public AbstractProducer(String topic) {
+        this();
+        this.BASE_TOPIC = topic;
     }
 
     @Override
-    public abstract void closeProducer();
+    public abstract void sendMessage(String message);
+
+    @Override
+    public void closeProducer() {
+        PRODUCER.close();
+    }
 }

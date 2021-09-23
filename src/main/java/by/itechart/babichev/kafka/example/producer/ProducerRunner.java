@@ -1,8 +1,5 @@
-package by.itechart.babichev.kafka.example;
+package by.itechart.babichev.kafka.example.producer;
 
-import by.itechart.babichev.kafka.example.producer.impl.BaseProducer;
-import by.itechart.babichev.kafka.example.producer.Producer;
-import by.itechart.babichev.kafka.example.producer.impl.BaseProducerWithCallback;
 import by.itechart.babichev.kafka.example.producer.impl.BaseProducerWithKeys;
 import by.itechart.babichev.kafka.example.util.ConsoleReader;
 
@@ -13,6 +10,7 @@ public class ProducerRunner {
     private static final Producer producer = new BaseProducerWithKeys();
 
     protected static final ConsoleReader CONSOLE_READER = new ConsoleReader();
+
 
     public static void main(String[] args) throws IOException {
 
