@@ -23,6 +23,14 @@ public class BaseConsumer extends AbstractConsumer {
         super(topics);
     }
 
+    public BaseConsumer(String group) {
+        super(group);
+    }
+
+    public BaseConsumer(String group, String... topics) {
+        super(group, topics);
+    }
+
     @Override
     public void pollData() {
 

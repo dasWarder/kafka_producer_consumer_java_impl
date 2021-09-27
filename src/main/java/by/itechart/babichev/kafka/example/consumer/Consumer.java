@@ -5,4 +5,6 @@ public interface Consumer {
     void pollData();
 
     void closeConsumer();
+
+    void interruptConsumer();
 }
