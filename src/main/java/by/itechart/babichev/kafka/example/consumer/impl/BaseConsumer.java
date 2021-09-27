@@ -34,12 +34,12 @@ public class BaseConsumer extends AbstractConsumer {
     @Override
     public void pollData() {
 
-        ConsumerRecords<String, String> records = CONSUMER.poll(DURATION);
+        ConsumerRecords<String, String> records = consumer.poll(DURATION);
 
         for (ConsumerRecord<String, String> record : records) {
 
             logger.info("Consumer: {}. Key = {}, value = {}, partition = {}, offset = {}",
-                    CONSUMER.toString(), record.key(), record.value(), record.partition(), record.offset());
+                    consumer.toString(), record.key(), record.value(), record.partition(), record.offset());
             System.out.println(record.value());
         }
     }

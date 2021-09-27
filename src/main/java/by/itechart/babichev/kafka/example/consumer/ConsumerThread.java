@@ -34,7 +34,7 @@ public class ConsumerThread implements Runnable {
         }
     }
 
-    public void shoutDown() {
+    public void shutDown() {
         consumer.interruptConsumer();
     }
 }

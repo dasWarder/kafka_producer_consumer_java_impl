@@ -23,7 +23,7 @@ public abstract class AbstractConsumer implements Consumer {
 
     protected static final String STRING_DESERIALIZER = StringDeserializer.class.getName();
 
-    protected static KafkaConsumer<String, String> CONSUMER;
+    protected static KafkaConsumer<String, String> consumer;
 
     public AbstractConsumer(String group) {
 
@@ -35,7 +35,7 @@ public abstract class AbstractConsumer implements Consumer {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, group);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, AUTO_OFFSET);
 
-        CONSUMER = new KafkaConsumer<>(properties);
+        consumer = new KafkaConsumer<>(properties);
 
         this.subscribeTopics(BASE_TOPIC);
     }
@@ -56,12 +56,12 @@ public abstract class AbstractConsumer implements Consumer {
 
     @Override
     public void interruptConsumer() {
-        CONSUMER.wakeup();
+        consumer.wakeup();
     }
 
     @Override
     public void closeConsumer() {
-        CONSUMER.close();
+        consumer.close();
     }
 
     @Override
@@ -72,6 +72,6 @@ public abstract class AbstractConsumer implements Consumer {
 
         List<String> topicsList = Arrays.stream(topics).collect(Collectors.toUnmodifiableList());
 
-        CONSUMER.subscribe(topicsList);
+        consumer.subscribe(topicsList);
     }
 }
